@@ -4,7 +4,7 @@ let return_url;
 
 
 const platformCode = {
-  "all": "STRIPE",   // deprecated Test use only -- You can use card,wechat_pay,alipay
+  "default": "STRIPE",   // deprecated Test use only -- You can use card,wechat_pay,alipay
   "card": "STRIPE-CARD",  // card payment
   "wechat_pay": "STRIPE-WECHAT_PAY", // wechat pay
   "alipay": "STRIPE-ALIPAY"  // alipay
@@ -17,9 +17,8 @@ document
 
 
 async function initialize() {
-  res = await getPaymentOrder(platformCode.all)
-  const clientJson = JSON.parse(res.clientJson)
-  console.log(clientJson)
+  const res = await getPaymentOrder(platformCode.default)
+  const clientJson = res.clientJson
   const { clientSecret, pubKey,successUri } = clientJson
   stripe = Stripe(pubKey);
   return_url = successUri

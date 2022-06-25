@@ -1,10 +1,23 @@
-window.onload = async () => {
-  const response = await fetch(`${base_url}`+   "/create-payment-intent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items }),
-  });
-  const elem = document.querySelector('#payment')
-  elem.setAttribute('payment-reference', 123)
-  elem.setAttribute('access-token', 123)
+
+const platformCode = {
+  "default": "TRIPLE",
+}
+
+initialize();
+
+async function initialize() {
+  const res = await getPaymentOrder(platformCode.default)
+  const clientJson = res.clientJson
+  // const elem = document.querySelector('#payment')
+  // elem.setAttribute('payment-reference', clientJson.paymentReference)
+  // elem.setAttribute('access-token', clientJson.accessToken)
+  document.querySelector('#payment-form').innerHTML = `
+  
+  <triplea-ecommerce-payment-v1
+  id="payment"
+  payment-reference="${clientJson.paymentReference}"
+  access-token="${clientJson.accessToken}"
+>
+</triplea-ecommerce-payment-v1>
+  `
 }

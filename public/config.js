@@ -16,6 +16,7 @@ async function getBalanceOrder(amount) {
         body: JSON.stringify(req),
     });
     const { code, data } = await response.json();
+    console.log("business: ",data)
     return {
         "businessType": 2,
         "businessId": data.id
@@ -36,6 +37,9 @@ async function getPaymentOrder(platformCode, business) {
         headers: { "Content-Type": "application/json", "token": token },
         body: JSON.stringify(req),
     });
-    const { code, data } = await response.json();
+    let { code, data } = await response.json();
+    console.log(code,data)
+    const clientJson = JSON.parse(data.clientJson)
+    data.clientJson = clientJson
     return data
 }
