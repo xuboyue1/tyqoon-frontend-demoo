@@ -1,27 +1,28 @@
-// This is your test publishable API key.
-const stripe = Stripe("pk_test_51L5hDIKLC9Y6YxW23etP8KK8lBmd6BHp6TCbvC43qsx4pahdmbkaisRiPsZ2Ya8veda352yy94mFcMjligFtP9vR00BlsKmmYh");
-
-// The items the customer wants to buy
-const items = [{ id: "xl-tshirt" }];
-
+let stripe;
 let elements;
+let return_url;
 
+
+const platformCode = {
+  "all": "STRIPE",   // deprecated Test use only -- You can use card,wechat_pay,alipay
+  "card": "STRIPE-CARD",  // card payment
+  "wechat_pay": "STRIPE-WECHAT_PAY", // wechat pay
+  "alipay": "STRIPE-ALIPAY"  // alipay
+
+}
 initialize();
-checkStatus();
-
 document
   .querySelector("#payment-form")
   .addEventListener("submit", handleSubmit);
 
-// Fetches a payment intent and captures the client secret
-async function initialize() {
-  const response = await fetch("/create-payment-intent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items }),
-  });
-  const { clientSecret } = await response.json();
 
+async function initialize() {
+  res = await getPaymentOrder(platformCode.all)
+  const clientJson = JSON.parse(res.clientJson)
+  console.log(clientJson)
+  const { clientSecret, pubKey,successUri } = clientJson
+  stripe = Stripe(pubKey);
+  return_url = successUri
   const appearance = {
     theme: 'stripe',
   };
@@ -39,7 +40,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "http://localhost:4242/checkout.html",
+      return_url:return_url,
     },
   });
 
@@ -57,33 +58,6 @@ async function handleSubmit(e) {
   setLoading(false);
 }
 
-// Fetches the payment intent status after payment submission
-async function checkStatus() {
-  const clientSecret = new URLSearchParams(window.location.search).get(
-    "payment_intent_client_secret"
-  );
-
-  if (!clientSecret) {
-    return;
-  }
-
-  const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
-  switch (paymentIntent.status) {
-    case "succeeded":
-      showMessage("Payment succeeded!");
-      break;
-    case "processing":
-      showMessage("Your payment is processing.");
-      break;
-    case "requires_payment_method":
-      showMessage("Your payment was not successful, please try again.");
-      break;
-    default:
-      showMessage("Something went wrong.");
-      break;
-  }
-}
 
 // ------- UI helpers -------
 
