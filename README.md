@@ -1,6 +1,6 @@
-# Accept a Payment
+# Accept a Front-end demo
 
-Build a simple checkout form to collect payment details. Included are some basic
+Build a simple front-end business logic
 build and run scripts you can use to start up the application.
 
 ## Running the sample
@@ -8,7 +8,7 @@ build and run scripts you can use to start up the application.
 1. Build the server
 
 ~~~
-npm install
+yarn or npm install
 ~~~
 
 2. Run the server
@@ -17,4 +17,8 @@ npm install
 npm start
 ~~~
 
-3. Go to [http://localhost:4242/checkout.html](http://localhost:4242/checkout.html)
+3. Examples
+
+* <strong>Stripe Payment</strong> [http://localhost:4242/payment/stripe/payment.html](http://localhost:4242/payment/stripe/payment.html)
+<br>
+* <strong>Triplea Payment</strong> [http://localhost:4242/payment/triplea/payment.html](http://localhost:4242/payment/stripe/payment.html)
