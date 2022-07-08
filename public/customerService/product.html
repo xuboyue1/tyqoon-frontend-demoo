@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    window.easemobim = window.easemobim || {};
+
+
+    // If the user is login
+    const user = {
+        nickName: "user1",
+        trueName: "user1",
+        phone: "188888888",
+        email: '123456@qq.com',
+        id: "1231232141255"
+    }
+
+    // product detail
+    const product = {
+        name: "艾贝丽电煮锅JP - DZG06",
+        amount: 150,
+        img: "https://weipinshang.oss-cn-shenzhen.aliyuncs.com/1a4f8202106260900348930.jpg",
+        url: "https://www.tyqoon.co/product/detail?id=2934828"
+    }
+
+    // zh - 我正在看：
+    // en - I am looking at
+    const title = "我正在看："
+        easemobim.config = {
+            configId: 'f565379a-ead0-45df-a7bb-7cbbee628fa3',
+
+            // user
+            visitor: {
+                trueName: user.trueName,
+                phone: user.phone,
+                userNickname: user.nickName,
+                email: user.email,
+                userDefineColumn: `{"userId": ${user.id}}`,
+            },
+
+            // send product to customerService
+            onready: function () {
+                easemobim.sendExt({
+                    ext: {
+                        "imageName": "mallImage3.png",
+                        "type": "custom",
+                        "msgtype": {
+                            "track": {
+                                "title": title,
+                                "price": product.amount,
+                                "desc": product.name,
+                                "img_url": product.img,
+                                "item_url": product.url
+                            }
+                        }
+                    }
+                })
+            }
+
+
+        };
+</script>
+<script src='//102849.kefu.easemob.com/webim/easemob.js'></script>
+
+</html>
