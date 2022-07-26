@@ -1,6 +1,6 @@
 
 
-const base_url = "http://localhost:11111"
+const base_url = "http://47.112.195.182:11111"
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNjYzOTE3MzU1LCJpYXQiOjE2NTYxNDEzNTUsImp0aSI6IjQ3Njk4NjUifQ.hGd9CxGXQYTLbiHZQmEkcsBlEXGfa3LLTXK2xh-jzxs"
 
 
