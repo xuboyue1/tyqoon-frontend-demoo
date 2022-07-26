@@ -1,23 +1,44 @@
 let stripe;
 let elements;
 let return_url;
+document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
 
 
-const platformCode = {
-  "default": "STRIPE",   // deprecated Test use only -- You can use card,wechat_pay,alipay
-  "card": "STRIPE-CARD",  // card payment
-  "wechat_pay": "STRIPE-WECHAT_PAY", // wechat pay
-  "alipay": "STRIPE-ALIPAY"  // alipay
+const platformGroup = "STRIPE"
 
-}
-initialize();
-document
-  .querySelector("#payment-form")
-  .addEventListener("submit", handleSubmit);
+const platformCode = [
+  "STRIPE",   // All payment methods included
+  "STRIPE-CARD",  // Card payment
+  "STRIPE-WECHAT_PAY", // Wechat Pay
+  "STRIPE-ALIPAY"  // Alipay
+]
 
+initialize()
 
 async function initialize() {
-  const res = await getPaymentOrder(platformCode.default)
+  const platformList = await getPlatform()
+  for (const platform of platformList) {
+    if (platformGroup == platform.platformGroup) {
+      const elem= document.getElementById(platform.platformCode)
+      if (elem!=null){
+        elem.removeAttribute("hidden")
+      }
+    
+    }
+  }
+}
+
+
+
+async function pay(code) {
+  setLoading(true);
+
+  const amount = document.getElementById("payment-amount").value
+  document.getElementById("payment-select").setAttribute("hidden", true)
+  document.getElementById("payment-form").removeAttribute("hidden")
+  const order =await getBalanceOrder(amount)
+  const res = await getPaymentOrder(code,order)
+  
   const clientJson = res.clientJson
   const { clientSecret, pubKey,successUri } = clientJson
   stripe = Stripe(pubKey);
@@ -26,9 +47,10 @@ async function initialize() {
     theme: 'stripe',
   };
   elements = stripe.elements({ appearance, clientSecret });
-
   const paymentElement = elements.create("payment");
   paymentElement.mount("#payment-element");
+
+  setLoading(false);
 }
 
 async function handleSubmit(e) {
