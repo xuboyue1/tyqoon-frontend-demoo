@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="https://pgw.2c2p.com/sdk/css/pgw-sdk-style-4.1.0.css">
     <link rel="stylesheet" href="https://pgw.2c2p.com/sdk/css/pgw-sdk-font-4.1.0.css">
     <link rel="stylesheet" href="payment.css" />
-    <script src="payment.js" defer></script>
     <script src="../../config.js" defer></script>
+    <script src="payment.js" defer></script>
 </head>
 <body>
 <div id="payment-select">
     <p>Amount: <label for="payment-amount"></label><input id="payment-amount"></p>
     <p>
         Payment :
-        <button  id="2C2P-CARD" type="button" onclick="pay('2C2P-CARD')">CARD</button>
-        <button  id="2C2P-ALIPAY" type="button" onclick="pay('2C2P-ALIPAY')">ALIPAY</button>
-        <button  id="2C2P-WECHAT_PAY" type="button" onclick="pay('2C2P-WECHAT_PAY')">WECHAT PAY</button>
+        <button hidden id="2C2P-CARD" type="button" onclick="pay('2C2P-CARD')">CARD</button>
+        <button hidden id="2C2P-ALIPAY" type="button" onclick="pay('2C2P-ALIPAY')">ALIPAY</button>
+        <button hidden id="2C2P-WECHAT_PAY" type="button" onclick="pay('2C2P-WECHAT_PAY')">WECHAT PAY</button>
     </p>
 </div>
 

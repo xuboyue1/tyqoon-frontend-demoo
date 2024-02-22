@@ -7,6 +7,7 @@ const platformCode = [
 ]
 
 
+initialize()
 
 async function initialize() {
     const platformList = await getPlatform()
@@ -49,5 +50,3 @@ async function pay(code) {
         }
     });
 }
-
-initialize()
