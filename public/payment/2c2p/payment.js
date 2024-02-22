@@ -6,12 +6,12 @@ const platformCode = [
     "2C2P-WECHAT_PAY", // WECHAT PAY
 ]
 
-initialize()
+
 
 async function initialize() {
     const platformList = await getPlatform()
     for (const platform of platformList) {
-        if (platformGroup == platform.platformGroup) {
+        if (platformGroup === platform.platformGroup) {
             const elem= document.getElementById(platform.platformCode)
             if (elem!=null){
                 elem.removeAttribute("hidden")
@@ -49,3 +49,5 @@ async function pay(code) {
         }
     });
 }
+
+initialize()
