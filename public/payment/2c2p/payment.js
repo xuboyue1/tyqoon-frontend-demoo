@@ -1,9 +1,9 @@
 const platformGroup = "2C2P"
 
 const platformCode = [
-    "2C2P-CARD",  // All payment methods included
-    "2C2P-ALIPAY", // Btc
-    "2C2P-WECHAT_PAY", // ETH
+    "2C2P-CARD",  // CARD
+    "2C2P-ALIPAY", // ALIPAY
+    "2C2P-WECHAT_PAY", // WECHAT PAY
 ]
 
 initialize()
