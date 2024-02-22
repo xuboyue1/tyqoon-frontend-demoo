@@ -1,5 +1,5 @@
 const base_url = "http://47.57.236.213:11111"
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzE2MDExMDE3LCJpYXQiOjE3MDgyMzUwMTcsImp0aSI6ImExNmEwZTFmZThiNWJhZDI4NDhkODMyODBjNjc2ZDU5In0.I6eUHceuNY5x222c1_y-Pl_WROnh9-e1tcTAnjcL5-M"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzE2MjYyODIxLCJpYXQiOjE3MDg0ODY4MjEsImp0aSI6IjE5MDQwZWE1Y2I0MDg2YTg1NzIxNTJjNmZlMzIwOThjIn0.FjHvv0VBRjjbnJq-ekx4SWCbVgqpPu6nnsoY823bLSY"
 
 
 async function getPlatform() {
