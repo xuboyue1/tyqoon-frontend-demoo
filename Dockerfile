@@ -4,9 +4,5 @@ WORKDIR /web
 COPY package.json ./package.json
 RUN yarn
 
-COPY web/ .
-RUN yarn start
-
-
 EXPOSE 4242
 CMD ["yarn","start"]
