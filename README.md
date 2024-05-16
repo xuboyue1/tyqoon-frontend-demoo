@@ -22,3 +22,5 @@ node main.js
 * <strong>Stripe Payment</strong> [http://localhost:4242/payment/stripe/payment.html](http://localhost:4242/payment/stripe/payment.html)
 <br>
 * <strong>Triplea Payment</strong> [http://localhost:4242/payment/triplea/payment.html](http://localhost:4242/payment/stripe/payment.html)
+
+* <strong>captcha</strong> [http://localhost:4242/captcha/captcha.html](http://localhost:4242/captcha/captcha.html)
