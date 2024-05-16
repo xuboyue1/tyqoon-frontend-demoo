@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--// 客户端body中的代码-->
+<div id="space-semantic">
+    <div id="embed-wrapper">
+        <h2>弹出式</h2>
+        <div class="embed-wrapper">
+            <div>
+                <label>用户名：</label>
+                <input id="username-embed" class="biz-input">
+            </div>
+            <div>
+                <label>密码：</label>
+                <input id="password-embed" type="password" class="biz-input">
+            </div>
+            <!--      //预留的验证码页面元素，用于配置初始化函数中的element参数-->
+            <div id="captcha-element"></div>
+            <button id="button" class="login-btn">登录</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="https://o.alicdn.com/captcha-frontend/aliyunCaptcha/AliyunCaptcha.js"></script>
+<script>
+    // 客户端原代码举例
+    const button = document.getElementById('button');
+    button.onclick = function () {
+        console.log("登录业务")
+        // 请求后端接口...
+        // const result = await getWithParams('xx', {
+        //     yourBizParam... // 业务参数
+        // });
+        // const { bizResult } = result;
+        // if (bizResult) {
+        // 跳转到对应页面。此处以跳转到https://www.aliyun.com/页面为例
+        window.location.href = 'https://www.aliyun.com/';
+        // }
+    }
+</script>
+<script>
+    let captcha;
+    // 弹出式
+    initAliyunCaptcha({
+        SceneId: '1irv9yx1', // 场景ID。根据步骤二新建验证场景后，您可以在验证码场景列表，获取该场景的场景ID
+        prefix: 'bx764n', // 身份标。开通阿里云验证码2.0后，您可以在控制台概览页面的实例基本信息卡片区域，获取身份标
+        mode: 'popup', // 验证码模式。popup表示要集成的验证码模式为弹出式。无需修改
+        element: '#captcha-element', //页面上预留的渲染验证码的元素，与原代码中预留的页面元素保持一致。
+        button: '#button', // 触发验证码弹窗的元素。button表示单击登录按钮后，触发captchaVerifyCallback函数。您可以根据实际使用的元素修改element的值
+        captchaVerifyCallback: captchaVerifyCallback, // 业务请求(带验证码校验)回调函数，无需修改
+        onBizResultCallback: onBizResultCallback, // 业务请求结果回调函数，无需修改
+        getInstance: getInstance, // 绑定验证码实例函数，无需修改
+        slideStyle: {
+            width: 360,
+            height: 40,
+        }, // 滑块验证码样式，支持自定义宽度和高度，单位为px。其中，width最小值为320 px
+        language: 'cn', // 验证码语言类型，支持简体中文（cn）、繁体中文（tw）、英文（en）
+        region: 'cn' //验证码示例所属地区，支持中国内地（cn）、新加坡（sgp）
+    });
+
+    // 绑定验证码实例函数。该函数为固定写法，无需修改
+    function getInstance(instance) {
+        captcha = instance;
+    }
+
+    // 业务请求(带验证码校验)回调函数
+    /**
+     * @name captchaVerifyCallback
+     * @function
+     * 请求参数：由验证码脚本回调的验证参数，不需要做任何处理，直接传给服务端即可
+     * @params {string} captchaVerifyParam
+     * 返回参数：字段名固定，captchaResult为必选；如无业务验证场景时，bizResult为可选
+     * @returns {{captchaResult: boolean, bizResult?: boolean|undefined}}
+     */
+    async function captchaVerifyCallback(captchaVerifyParam) {
+        // 1.向后端发起业务请求，获取验证码验证结果和业务结果
+        const result = await fetch('http://47.57.236.213/:11111/user/basic/checkAliCaptcha', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                captchaVerifyParam: captchaVerifyParam // 验证码参数
+            })
+        }).then((response) => {
+            console.log("response::", response)
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        // const result = await fetch('http://47.57.236.213:11111/user/basic/checkAliCaptcha', {
+        //     captchaVerifyParam: captchaVerifyParam // 验证码参数
+        // });
+        console.log("result", result)
+        // 2.构造标准返回参数
+        const verifyResult = {
+            captchaResult: result.data.captchaVerifyResult, // 验证码验证是否通过，boolean类型，必选
+        };
+        return verifyResult;
+    }
+
+    // 业务请求验证结果回调函数
+    function onBizResultCallback(bizResult) {
+        if (bizResult === true) {
+            // 如果业务验证通过，跳转到对应页面。此处以跳转到https://www.aliyun.com/页面为例
+            window.location.href = 'https://www.aliyun.com/';
+        } else {
+            // 如果业务验证不通过，给出不通过提示。此处不通过提示为业务验证不通过！
+            alert('业务验证不通过！');
+        }
+    }
+</script>
