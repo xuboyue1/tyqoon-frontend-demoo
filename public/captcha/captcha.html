@@ -39,8 +39,21 @@
         // const { bizResult } = result;
         // if (bizResult) {
         // 跳转到对应页面。此处以跳转到https://www.aliyun.com/页面为例
-        window.location.href = 'https://www.aliyun.com/';
+        // window.location.href = 'https://www.aliyun.com/';
         // }
+        const captchaVerifyCode = localStorage.getItem("captchaVerifyCode")
+        const res = fetch('http://47.57.236.213:11111/user/basic/v2/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Captcha_Verify_Code': captchaVerifyCode
+            },
+            body: JSON.stringify({
+                username: "xby1995", // 验证码参数
+                password: "0c8abdb962f042d1857c66dd26b0c87b"
+            })
+        });
+        alert(res)
     }
 </script>
 <script>
@@ -49,7 +62,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Captcha_Verify_Scene':'registerSendEmail'
+                'Captcha_Verify_Scene': 'registerSendEmail'
             }
         });
         // const configResult = res.json();
@@ -79,6 +92,7 @@
             region: 'cn' //验证码示例所属地区，支持中国内地（cn）、新加坡（sgp）
         });
     }
+
     // const configResult = response.json();
     init();
 
