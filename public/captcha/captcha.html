@@ -41,19 +41,7 @@
         // 跳转到对应页面。此处以跳转到https://www.aliyun.com/页面为例
         // window.location.href = 'https://www.aliyun.com/';
         // }
-        const captchaVerifyCode = localStorage.getItem("captchaVerifyCode")
-        const res = fetch('http://47.57.236.213:11111/user/basic/v2/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Captcha_Verify_Code': captchaVerifyCode
-            },
-            body: JSON.stringify({
-                username: "xby1995", // 验证码参数
-                password: "0c8abdb962f042d1857c66dd26b0c87b"
-            })
-        });
-        alert(res)
+
     }
 </script>
 <script>
@@ -145,12 +133,26 @@
 
     // 业务请求验证结果回调函数
     function onBizResultCallback(bizResult) {
-        if (bizResult === true) {
-            // 如果业务验证通过，跳转到对应页面。此处以跳转到https://www.aliyun.com/页面为例
-            window.location.href = 'https://www.aliyun.com/';
-        } else {
-            // 如果业务验证不通过，给出不通过提示。此处不通过提示为业务验证不通过！
-            alert('业务验证不通过！');
-        }
+        console.log("bizResult",bizResult)
+        // if (bizResult === true) {
+        //     // 如果业务验证通过，跳转到对应页面。此处以跳转到https://www.aliyun.com/页面为例
+        //     window.location.href = 'https://www.aliyun.com/';
+        // } else {
+        //     // 如果业务验证不通过，给出不通过提示。此处不通过提示为业务验证不通过！
+        //     alert('业务验证不通过！');
+        // }
+        const captchaVerifyCode = localStorage.getItem("captchaVerifyCode")
+        const res = fetch('http://47.57.236.213:11111/user/basic/v2/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Captcha_Verify_Code': captchaVerifyCode
+            },
+            body: JSON.stringify({
+                username: "xby1995", // 验证码参数
+                password: "0c8abdb962f042d1857c66dd26b0c87b"
+            })
+        });
+        alert(res)
     }
 </script>
