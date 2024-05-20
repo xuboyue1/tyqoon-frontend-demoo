@@ -43,6 +43,27 @@
         // }
 
     }
+
+    /*
+    
+        请求头说明
+        1. Captcha-Verify-Scene 校验场景 
+        用户/密码登录：code: loginPwd           url: /user/basic/v2/login
+        发送手机验证码： code: sendMobileSms    url: /user/basic/v2/queryMobilesms
+        发起邮箱验证码： code: sendEmail        url :/user/basic/v2/sendEmail
+        
+        2. Captcha-Verify-Code 验证id
+
+    */
+
+    /*
+    业务流程调用
+        1. 获取配置 通过getCaptchaConfig获取初始化验证码的配置信息，
+        2. 生成验证码并且到checkAliCaptcha校验验证码是否正确
+        3. 调用场景对应的业务接口 例如：用户/密码登录，则调用 /user/basic/v2/login
+
+    */
+
 </script>
 <script>
     async function init() {
@@ -50,7 +71,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Captcha_Verify_Scene': 'loginPwd'
+                'Captcha-Verify-Scene': 'loginPwd'
             }
         });
         // const configResult = res.json();
@@ -108,7 +129,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Captcha_Verify_Code': captchaVerifyCode
+                'Captcha-Verify-Code': captchaVerifyCode
             },
             body: JSON.stringify({
                 captchaVerifyParam: captchaVerifyParam // 验证码参数
@@ -146,7 +167,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Captcha_Verify_Code': captchaVerifyCode
+                'Captcha-Verify-Code': captchaVerifyCode
             },
             body: JSON.stringify({
                 username: "xby1995", // 验证码参数
