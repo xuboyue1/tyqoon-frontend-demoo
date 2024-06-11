@@ -1,6 +1,7 @@
 let Socket = null
 let setIntervalWebsocketPush = null
 let url = "wss://ws.icool.world/ws"
+// let url = "ws://47.57.236.213:8848/ws"
 let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzIxMTk3MzI2LCJpYXQiOjE3MTM0MjEzMjYsImp0aSI6IjU0NDYwOWM4OGUxNTBiNDZkNWZlYzhkZDQwOTdkZjkxIn0.GbYiBy533oy3BLq02dNgLWaPBRogaD0vaKSodvIR3o0"
 
 createSocket()
