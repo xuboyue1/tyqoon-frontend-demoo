@@ -15,6 +15,53 @@
         </button>
     </p>
 </div>
-
+<div id="notice" style="display: none;">
+    <h2>Notice:</h2>
+    <table border="1">
+        <thead>
+        <tr id="notice-thead"></tr>
+        </thead>
+        <tbody id="notice-content">
+        </tbody>
+    </table>
+</div>
 </body>
+<script>
+    let noticeList = []
+    window.addEventListener('onmessageWS', function (event) {
+        const data = JSON.parse(event.detail.data)
+        if (data.data && data.data.length > 0) {
+            switch (data.type) {
+                case 'Notice':
+                    noticeList = data.data
+                    document.getElementById('notice').style.display = 'block'
+                    generateDivs('notice-thead', 'notice-content', noticeList)
+            }
+        }
+    })
+
+    function generateDivs(theadId, contentId, data) {
+        const thead = document.getElementById(theadId);
+        thead.innerHTML = ""
+        let title = ""
+        for (let key in data[0]) {
+            title += '<td style="text-align: center;padding: 10px;">' + key + "</td>"
+        }
+        thead.innerHTML = title;
+        const container = document.getElementById(contentId);
+        container.innerHTML = ""
+        for (let i = 0; i < data.length; i++) {
+            const item = data[i]
+            let content = ""
+            const div = document.createElement('tr');
+            for (let key in item) {
+                if (item.hasOwnProperty(key)) {
+                    content += '<td style="text-align: center;padding: 10px;">' + item[key] + "</td>"
+                }
+            }
+            div.innerHTML = content;
+            container.appendChild(div);
+        }
+    }
+</script>
 </html>
