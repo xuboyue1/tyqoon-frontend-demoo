@@ -43,10 +43,14 @@ async function pay(code) {
   const { clientSecret, pubKey,successUri } = clientJson
   stripe = Stripe(pubKey);
   return_url = successUri
-  const appearance = {
-    theme: 'stripe',
+  const options = {
+    clientSecret: clientSecret,
+    // Fully customizable with appearance API.
+    // appearance: {/*...*/},
   };
-  elements = stripe.elements({ appearance, clientSecret });
+
+// Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
+  elements = stripe.elements(options);
   const paymentElement = elements.create("payment");
   paymentElement.mount("#payment-element");
 
@@ -57,7 +61,7 @@ async function handleSubmit(e) {
   e.preventDefault();
   setLoading(true);
 
-  const { error } = await stripe.confirmSetup({
+  const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
