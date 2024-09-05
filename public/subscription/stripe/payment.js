@@ -41,12 +41,20 @@ async function pay(code) {
   const { clientSecret, pubKey,successUri } = clientJson
   stripe = Stripe(pubKey);
   return_url = successUri
-  const appearance = {
-    theme: 'stripe',
+
+  const options = {
+    clientSecret: clientSecret,
+    // Fully customizable with appearance API.
+    // appearance: {/*...*/},
   };
-  elements = stripe.elements({ appearance, clientSecret });
-  const paymentElement = elements.create("payment");
-  paymentElement.mount("#payment-element");
+
+// Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
+  elements = stripe.elements(options);
+
+// Create and mount the Payment Element
+  const paymentElement = elements.create('payment');
+  paymentElement.mount('#payment-element');
+
 
   setLoading(false);
 }
@@ -55,23 +63,25 @@ async function handleSubmit(e) {
   e.preventDefault();
   setLoading(true);
 
-  const { error } = await stripe.confirmSetup({
+
+  const {error} = await stripe.confirmPayment({
+    //`Elements` instance that was used to create the Payment Element
     elements,
     confirmParams: {
-      // Make sure to change this to your payment completion page
-      return_url:return_url,
-    },
+      return_url: return_url,
+    }
   });
 
-  // This point will only be reached if there is an immediate error when
-  // confirming the payment. Otherwise, your customer will be redirected to
-  // your `return_url`. For some payment methods like iDEAL, your customer will
-  // be redirected to an intermediate site first to authorize the payment, then
-  // redirected to the `return_url`.
-  if (error.type === "card_error" || error.type === "validation_error") {
-    showMessage(error.message);
+  if (error) {
+    // This point will only be reached if there is an immediate error when
+    // confirming the payment. Show error to your customer (for example, payment
+    // details incomplete)
+    const messageContainer = document.querySelector('#error-message');
+    messageContainer.textContent = error.message;
   } else {
-    showMessage("An unexpected error occurred.");
+    // Your customer will be redirected to your `return_url`. For some payment
+    // methods like iDEAL, your customer will be redirected to an intermediate
+    // site first to authorize the payment, then redirected to the `return_url`.
   }
 
   setLoading(false);
@@ -97,11 +107,11 @@ function setLoading(isLoading) {
   if (isLoading) {
     // Disable the button and show a spinner
     document.querySelector("#submit").disabled = true;
-    document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
+    // document.querySelector("#spinner").classList.remove("hidden");
+    // document.querySelector("#button-text").classList.add("hidden");
   } else {
     document.querySelector("#submit").disabled = false;
-    document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector("#button-text").classList.remove("hidden");
+    // document.querySelector("#spinner").classList.add("hidden");
+    // document.querySelector("#button-text").classList.remove("hidden");
   }
 }
