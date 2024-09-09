@@ -1,6 +1,7 @@
 const base_url = "http://47.57.236.213:41111"
 const token = "\n" +
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzMzMDI0MDQ1LCJpYXQiOjE3MjUyNDgwNDUsImp0aSI6IjFkOWU3MzI3MGQyMjRlY2JhZWIxNDcyYzk5NzlhZjdjIn0.fNhg3j_w1T4mFsLDdQAIIrZci3oEoboh8hsJz4TZ9TU"
+    "\n" +
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzMyNzYwODk3LCJpYXQiOjE3MjQ5ODQ4OTcsImp0aSI6IjFkOWU3MzI3MGQyMjRlY2JhZWIxNDcyYzk5NzlhZjdjIn0._Zvumh8F9tSc3La_q7ad2umuE95nsrFzpPOF7zJhY0w"
 
 
 async function getPlatform() {
@@ -35,7 +36,7 @@ async function getBalanceOrder(amount) {
 
 async function buyVip() {
     const req = {
-        "vipConfigId": "3",
+        "vipConfigId": "5",
         "currency": "CNY",
         "num": 1
     }
