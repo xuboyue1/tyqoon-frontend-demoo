@@ -6,8 +6,8 @@
 </head>
 <body>
   <button id="btn1">open customer service</button>
-<!--  <button id="btn2">send product</button>-->
-<!--  <button id="btn3">send order</button>-->
+  <button id="btn2" style="display: none">send product</button>
+  <button id="btn3" style="display: none">send order</button>
 </body>
 <script src="https://webchat-bj.clink.cn/clink-chat-api.js"></script>
 <script>
@@ -17,35 +17,35 @@
   document.getElementById('btn1').onclick = () => {
       ClinkChatWeb.openSessionWindow()
   }
-  // document.getElementById('btn2').onclick = () => {
-  //     ClinkChatWeb.openSessionWindow()
-  //     ClinkChatWeb.sendVisitorMsg({
-  //         type: 'text',
-  //         content: 'I want to inquire about this product'
-  //     })
-  //     // clinkWebchatOptions({
-  //     //     accessId: 'a707488d-4757-4c7f-839f-e0c85a45eb97',
-  //     //     linkCard: JSON.stringify({
-  //     //         title: "【123段可选】御宝恩蓓护婴幼儿配方羊奶粉小听100g 新国标(支持七天无理由退货)",
-  //     //         // subTitle: "醇香 || 1-3岁3段100g",
-  //     //         // description: "here is description",
-  //     //         // price: "￥5.14",
-  //     //         // priceStyle: {'font-size': '14px', 'color': '#4385ff'},
-  //     //         img: "https://akmer.aikucun.com/merchant-platform/f683253ce33fb11e161ae502bb6926bf009f9456_1698918544066_37.jpg",
-  //     //         // url: "https://www.baidu.com",
-  //     //         // subUrl: "https://www.baidu.com",
-  //     //         // time: "2021-10-26 11:10:12",
-  //     //         // buttonText: "发送",
-  //     //         // tabMenuName: "自定义菜单",
-  //     //         // extraInfo: [
-  //     //         //     { name: "自定义字段1", value: "1" },
-  //     //         //     { name: "自定义字段2", value: "2" },
-  //     //         //     { name: "自定义字段3", value: "3" },
-  //     //         //     { name: "自定义字段4", value: "4" },
-  //     //         //     { name: "自定义字段5", value: "5" }
-  //     //         // ]
-  //     //     })
-  //     // })
+  document.getElementById('btn2').onclick = () => {
+      ClinkChatWeb.openSessionWindow()
+      ClinkChatWeb.sendVisitorMsg({
+          type: 'text',
+          content: 'I want to inquire about this product'
+      })
+      clinkWebchatOptions({
+          accessId: 'a707488d-4757-4c7f-839f-e0c85a45eb97',
+          linkCard: JSON.stringify({
+              title: "【123段可选】御宝恩蓓护婴幼儿配方羊奶粉小听100g 新国标(支持七天无理由退货)",
+              // subTitle: "醇香 || 1-3岁3段100g",
+              // description: "here is description",
+              // price: "￥5.14",
+              // priceStyle: {'font-size': '14px', 'color': '#4385ff'},
+              img: "https://akmer.aikucun.com/merchant-platform/f683253ce33fb11e161ae502bb6926bf009f9456_1698918544066_37.jpg",
+              // url: "https://www.baidu.com",
+              // subUrl: "https://www.baidu.com",
+              // time: "2021-10-26 11:10:12",
+              // buttonText: "发送",
+              // tabMenuName: "自定义菜单",
+              // extraInfo: [
+              //     { name: "自定义字段1", value: "1" },
+              //     { name: "自定义字段2", value: "2" },
+              //     { name: "自定义字段3", value: "3" },
+              //     { name: "自定义字段4", value: "4" },
+              //     { name: "自定义字段5", value: "5" }
+              // ]
+          })
+      })
   //     ClinkChatApi.setIframeCard("tinet-chat-iframe", {
   //         title: "【123段可选】御宝恩蓓护婴幼儿配方羊奶粉小听100g 新国标(支持七天无理由退货)",
   //         // subTitle: "醇香 || 1-3岁3段100g",
@@ -73,7 +73,7 @@
   //         type: 'text',
   //         content: 'I want to inquire about this order'
   //     })
-  // }
+  }
   function initSdk (win, doc, src, opt) {
       win[opt] = win[opt] || function () {
           win[opt].options = arguments[0]
@@ -91,8 +91,7 @@
           replyWelcome: "welcome to wooha", // Welcome message after the user opens the customer service pop-up
           headerDisplay: "1", // Do not display when the value equals "0"
           visitorTag: "", // At most three characters can be displayed to mark the user
-          province: "",
-          city: "",
+          language: "zh_CN",  // CN:zh_CN  CN-TR:zh_TW  EN:en_US
           // customerFields: encodeURIComponent(JSON.stringify({
           //     yourNumberCustomerField: 0,
           //     yourStringCustomerField: "stringValue",
@@ -102,11 +101,10 @@
           //     yourNumberCustomerField: 0,
           //     yourStringCustomerField: "stringValue",
           // })),
-          language: "zh_CN",
       });
   }
 
-  initSdk (window, document, `${link}?v=`+Date.now(), 'clinkWebchatOptions')
+  initSdk(window, document, `${link}?v=`+Date.now(), 'clinkWebchatOptions')
 
 
 </script>
