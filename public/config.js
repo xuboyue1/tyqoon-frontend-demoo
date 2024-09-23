@@ -1,7 +1,6 @@
-const base_url = "http://47.57.236.213:41111"
-const token = "\n" +
-    "\n" +
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzMyNzYwODk3LCJpYXQiOjE3MjQ5ODQ4OTcsImp0aSI6IjFkOWU3MzI3MGQyMjRlY2JhZWIxNDcyYzk5NzlhZjdjIn0._Zvumh8F9tSc3La_q7ad2umuE95nsrFzpPOF7zJhY0w"
+const base_url = "http://127.0.0.1:41111"
+const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzM0ODM0MDkyLCJpYXQiOjE3MjcwNTgwOTIsImp0aSI6IjUwNDMyM2YzZDIwZDU1NDZlNThiZmQzMzUxYTEwZjljIn0.aCsT_lgfakf966maGCL0qP5Lo4KP6VTC9ZIljvHH7Pw"
 
 
 async function getPlatform() {
@@ -63,7 +62,7 @@ async function getPaymentOrder(platformCode, business, paymentType) {
         "businessId": business.businessId,
         "paymentType": paymentType
     }
-    const response = await fetch(`${base_url}` + "/payment/payV2", {
+    const response = await fetch(`${base_url}` + "/payment/subscriptionPay", {
         method: "POST",
         headers: {"Content-Type": "application/json", "token": token},
         body: JSON.stringify(req),

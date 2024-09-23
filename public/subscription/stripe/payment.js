@@ -38,7 +38,11 @@ async function pay(code) {
   const res = await getPaymentOrder(code,order)
 
   const clientJson = res.clientJson
-  const { clientSecret, pubKey,successUri } = clientJson
+  const { clientSecret, pubKey,successUri,redirectUri,isRedirect } = clientJson
+  if(isRedirect){
+    window.location.href=redirectUri
+    return
+  }
   stripe = Stripe(pubKey);
   return_url = successUri
 
