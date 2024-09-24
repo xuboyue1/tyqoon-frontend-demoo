@@ -1,4 +1,5 @@
-const base_url = "http://127.0.0.1:41111"
+// const base_url = "http://127.0.0.1:41111"
+const base_url = "http://47.57.236.213:41111"
 const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wIiwiZXhwIjoxNzM0ODM0MDkyLCJpYXQiOjE3MjcwNTgwOTIsImp0aSI6IjUwNDMyM2YzZDIwZDU1NDZlNThiZmQzMzUxYTEwZjljIn0.aCsT_lgfakf966maGCL0qP5Lo4KP6VTC9ZIljvHH7Pw"
 
