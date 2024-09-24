@@ -67,7 +67,7 @@
 </script>
 <script>
     async function init() {
-        const res = await fetch('http://47.57.236.213:11111/user/basic/getCaptchaConfig', {
+        const res = await fetch('http://47.57.236.213:41111/user/basic/getCaptchaConfigV2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,8 +78,9 @@
         let {code, data} = await res.json();
         console.log(code, data)
         // console.log("configResult", configResult.data)
-        const sceneId = data.sceneId
-        const prefix = data.prefix
+        const clientJson = JSON.parse(data.clientJson)
+        const sceneId = clientJson.sceneId
+        const prefix = clientJson.prefix
         const captchaVerifyCode = data.captchaVerifyCode
         localStorage.setItem("captchaVerifyCode", captchaVerifyCode)
 
@@ -125,14 +126,15 @@
     async function captchaVerifyCallback(captchaVerifyParam) {
         const captchaVerifyCode = localStorage.getItem("captchaVerifyCode")
         // 1.向后端发起业务请求，获取验证码验证结果和业务结果
-        const result = await fetch('http://47.57.236.213:11111/user/basic/checkAliCaptcha', {
+        const result = await fetch('http://47.57.236.213:41111/user/basic/checkCaptchaV2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Captcha-Verify-Code': captchaVerifyCode
+                'Captcha-Verify-Code': captchaVerifyCode,
+                'Captcha-Verify-Scene': 'loginPwd'
             },
             body: JSON.stringify({
-                captchaVerifyParam: captchaVerifyParam // 验证码参数
+                clientJson: captchaVerifyParam // 验证码参数
             })
         }).then((response) => {
             console.log("response::", response)
@@ -163,7 +165,7 @@
         //     alert('业务验证不通过！');
         // }
         const captchaVerifyCode = localStorage.getItem("captchaVerifyCode")
-        const res = fetch('http://47.57.236.213:11111/user/basic/v2/login', {
+        const res = fetch('http://47.57.236.213:41111/user/basic/v2/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
