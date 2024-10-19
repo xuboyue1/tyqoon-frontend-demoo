@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    Sandbox (test environment)-->
+    <script type="text/javascript" src="https://js-sandbox.tazapay.com/v2.0-sandbox.js"></script>
+<!--    Production (live environment)-->
+<!--    <script type="text/javascript" src="https://js.tazapay.com/v2.0.js"></script>-->
+</head>
+<body>
+    <div id="tz-checkout"></div>
+
+<script>
+    const token = "zDxUT1vDL2ipf8j3nkOHEGn091ko2dsE8t0mLLGdMik=";
+    const options = {
+        clientToken: token, // Use the token obtained at step2.
+        callbacks: {
+            onPaymentSuccess: () => { console.log ("success") },
+            onPaymentFail: () => { console.log ("fail") },
+            onPaymentMethodSelected: () => { console.log ("onPaymentMethodSelected") }, // optional
+            onPaymentCancel: () => { console.log ("onPaymentCancel") }, // optional
+        },
+        style: {}, // optional, for customising your integration,
+        config: {
+            redirectionTarget: "self", // optional -> "self" or "new_window"
+            popup: false, // optional -> true or false // by default iframe will be embedded
+            origins: 'https://your.siteOrigin,https://your.host.siteOrigin', // required only, if tazapay iframe embedded site(your site) is loaded inside an another site/iframe(your host site).
+        },
+    };
+
+    window.tazapay.checkout(options);
+
+
+
+</script>
+</body>
+</html>
