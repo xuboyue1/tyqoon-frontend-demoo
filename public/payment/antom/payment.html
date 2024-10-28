@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    // 可以使用npm -->
+    <script src="https://sdk.marmot-cloud.com/package/ams-checkout/1.19.0/dist/umd/ams-checkout.min.js"></script>
+</head>
+<body>
+<p>sessionData: <input id="session-data"></p>
+<button id="create" type="button" onclick="create()">点击支付</button>
+
+<script>
+    // 对接文档：https://global.alipay.com/docs/ac/cashierpay_zh-cn/apm_ww#eAHJS
+    // SDK注意事项：https://global.alipay.com/docs/ac/sdks_zh-cn/ref
+    // SKD包：https://global.alipay.com/docs/ac/sdks_zh-cn/web
+
+
+    // start 初始化 sdk
+    let language = navigator.language || navigator.userLanguage;
+    language = language.replace("-", "_"); // Replace "-" with "_"
+    const checkoutApp = new window.AMSCashierPayment({
+        // 支付clientJson获取
+        environment: "sandbox",
+        locale: "en_US",
+        onLog: ({code, message}) => {
+        },
+        onEventCallback: ({code, message}) => {
+        },
+    });
+
+
+    // 点击打开支付页面
+    async function create() {
+        const sessionData = document.getElementById("session-data").value
+        console.log(checkoutApp)
+        console.log("sessionData------->", sessionData)
+
+        await checkoutApp.createComponent({
+            sessionData: sessionData,
+            appearance: {
+                showLoading: true, // Set as true by default to enable the default loading pattern
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
