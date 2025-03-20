@@ -3,9 +3,32 @@
 
 <head>
     <title>坐席工作台</title>
-    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
        <style>
+           #app {
+               height: 100%;
+               width: 100%;
+               overflow: hidden;
+           }
+           #im-container {
+               height: 100%;
+           }
+           .js_ChatList-Tabs.react-resizable {
+               position: absolute;
+               height: 100%;
+               transition: all .3s;
+               z-index: 9999;
+           }
+           .js_ChatList-Tabs.react-resizable .ChatList {
+            min-width: unset;
+           }
+           .ChatFooter {
+            height: 320px;
+           }
+           .react-tooltip .RichtextEditor-ai-container {
+            width: auto;
+           }
         *{
         margin: 0;
         padding: 0;
@@ -33,10 +56,7 @@
         font-size: 14px;
         color: #4F5357;
         position: fixed;
-        background: #FFFFFF;
-        border: 1px solid #D7D8D9;
-        box-shadow: 0 1px 4px 0 rgba(55, 61, 65, 0.14);
-        right: 50px;
+        right: 0px;
         transition: all .3s;
         }
 
@@ -47,41 +67,179 @@
         top: 150px;
         right: 400px;
         }
+        #im-container {
+          padding-top: 40px;
+        }
     </style>
 </head>
 
 <body>
 <div id="app">
-    <!-- <div onclick="openWorkbench()" class="mini-workbench">
-        云呼
-    </div> -->
+<!--    <div onclick="openWorkbench()" class="mini-workbench">-->
+<!--        云呼-->
+<!--    </div>-->
     <div id="workbench"></div>
     <div id="im-container"></div>
 </div>
 
-<!-- <h1 th:inline="text">Hello [[${loginName}]]</h1>
-<p>返回<a th:href="@{/home}">home</a>页</p>
-<p>Click
-    <a th:href="@{/customers}">here</a> to see a customer list.</p>
+<!--<h1 th:inline="text">Hello [[${loginName}]]</h1>-->
+<!--<p>返回<a th:href="@{/home}">home</a>页</p>-->
+<!--<p>Click-->
+<!--    <a th:href="@{/customers}">here</a> to see a customer list.</p>-->
 
-<hr/> -->
+<!--<hr/>-->
 
-<p>当前坐席</p>
-<!-- <div th:if="${loginName} != null">
-    <p th:inline="text">坐席登录名: [[${loginName}]]</p>
-</div> -->
+<!--<p>当前坐席</p>-->
+<!--<div th:if="${loginName} != null">-->
+<!--    <p th:inline="text">坐席登录名: [[${loginName}]]</p>-->
+<!--</div>-->
 
-<hr/>
+<!--<hr/>-->
 
-<!-- <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form> -->
-<!-- <div>
-    <h2 onclick="call()" class="test-call">拨号测试:135012345678</h2>
-    <button onClick="applyBreak()">测试小休</button>
-    <div id="test"></div>
-</div> -->
-<script id="cc-im-sdk" src="https://o.alicdn.com/cloudcallcenter/cc-im-web-widget/index.js?token=9XYGTGWtq2yTnFupcF1XPDhueDDnJNsa_ruD-oszLKp7-0YmAuAG8Jg4kJYcBrwYmDCSdp34K2WFhARtIx-R6A1IWCBE8My0Hf9cPe0iIBT4TZ-a2h83hg%3D%3D&userId=123213&userName=张三"></script>
+<!--<form th:action="@{/logout}" method="post">-->
+<!--    <input type="submit" value="Sign Out"/>-->
+<!--</form>-->
+<!--<div>-->
+<!--    <h2 onclick="call()" class="test-call">拨号测试:135012345678</h2>-->
+<!--    <button onClick="applyBreak()">测试小休</button>-->
+<!--    <div id="test"></div>-->
+<!--</div>-->
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/code/npm/@ali/cc-im-sdk/1.2.2/index.css"></link>
+<!-- 软电话sdk样式文件-PC端（使用IM插件也得加载） -->
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/cloudcallcenter/web-workbench-sdk/3.3.7/ui.min.css"></link>
+<!-- IM sdk js文件，不使用IM插件不要加载此文件-->
+<script src="//g.alicdn.com/code/npm/@ali/cc-im-sdk/1.2.2/index.js"></script>
+<!-- 软电话sdk js文件（使用IM插件也得加载） -->
+<script src="//g.alicdn.com/cloudcallcenter/web-workbench-sdk/3.3.7/ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+<script th:inline="javascript">
+    !(function (win) {
+      let chatListTabs = null;
+      const button = document.createElement("button")
+      const product = 'CloudCallCenter'
+      const version = '2020-07-01'
+      const region = 'cn-shanghai'
+      win.workbench = new win.CCCWorkbenchSDK({
+        dom: 'workbench',
+        instanceId: 'demo-1861730795316194',
+        ajaxOrigin: 'http://192.168.1.247:8080',
+        ajaxPath: '/aliyun/ccc/api',
+        ajaxMethod: 'post',
+        functionSwitch: {
+          showFlashSmsConfig: false
+        },
+        apiAxiosFunc: function(action, request) {
+          const form = new FormData()
+          form.append('request', JSON.stringify(request))
+          return axios({
+            method: 'post',
+            url: 'http://api2b-dev.woo-ha.cn/admin/ccc/aliyun/ccc/api',
+            params: {
+              action,
+              product,
+              version,
+              region
+            },
+            headers: {
+              LoginName: "aliyun0878572321"
+            },
+            data: form
+          })
+        },
+        onErrorNotify: function (error) {
+          console.warn(error)
+        },
+        onCallComing: function (aa, bb, cc, dd) {
+          console.log(aa, bb, cc, dd);
+          window.open("https://127.0.0.1:8443/customer/phoneNumber/135012345678")
+        },
+        onCallDialing: function (aa, bb, cc, dd) {
+          console.log(aa, bb, cc, dd);
+        },
+        onStatusChange: function (code, lastCode, context){
+          console.log(code, lastCode, context);
+        },
+        onInit: () => {
+          chatListTabs = document.querySelector(".js_ChatList-Tabs.react-resizable")
+          chatListTabs.style.width = 0
+
+          button.style.position = "absolute"
+          button.style.bottom = "50%"
+          button.style.right = "0px"
+          button.style.background = "#328cff"
+          button.style.color = "#fff"
+          button.style.transform = "translateX(100%) translateY(-50%)"
+          button.style.padding = "5px"
+          button.style.cursor = "pointer"
+          button.style.border = "none"
+          button.style.display = "flex"
+          button.style.alignItems = "center"
+          button.style.width = "24px"
+          button.style.zIndex = "9999"
+          button.innerHTML = "展开"
+          button.style.borderTopRightRadius = "10px"
+          button.style.borderBottomRightRadius = "10px"
+          chatListTabs.appendChild(button)
+          button.addEventListener("click", () => {
+            const isHidden = parseInt(chatListTabs.style.width) === 0
+            chatListTabs.style.width = isHidden ? "232px" : 0
+            button.innerHTML = isHidden ? "收起" : "展开"
+          })
+        },
+          imConfig: {
+              getContainer() {
+            return document.getElementById('im-container');
+        },
+        onConvChange() {
+          console.log('onConvChange')
+          chatListTabs.style.width = 0
+          button.innerHTML = '展开'
+          win.workbench.changeUIConfig({mainContentVisible: false})
+        },
+        onConvInvite() {
+          console.log('onConvChange')
+        },
+        onConvCancelInvite() {
+          console.log('onConvChange')
+        },
+        onConvReleased() {
+          console.log('onConvChange')
+        }
+          }
+
+      })
+        win.workbench.renderIM()
+      //面板展示开关
+      win.workbenchOpen = true;
+      openWorkbench = function () {
+        var workbenchWrapper = document.querySelector("#workbench");
+        var floater = document.querySelector(".mini-workbench");
+        win.workbench.changeVisible(win.workbenchOpen);
+        if (!win.workbenchOpen) {
+          workbenchWrapper.style.display = 'none';
+          floater.innerHTML = '云呼';
+        } else {
+          workbenchWrapper.style.display = 'block';
+          floater.innerHTML = 'X';
+        }
+        win.workbenchOpen = !win.workbenchOpen
+      }
+
+      call = function () {
+        win.workbench.call("135012345678")
+      }
+
+      applyBreak = function () {
+        var yes = prompt("请输入：小休id-小休名称（请不要输入0-default", "1-wc");
+        if(yes){
+          var id = yes.split("-")[0] || 1;
+          var name = yes.split("-")[1] || 'wc';
+          win.workbench.applyForBreak(id, name);
+        }
+      }
+
+    })(window)
+
 </script>
 </body>
 
